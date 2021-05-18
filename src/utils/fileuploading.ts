@@ -1,10 +1,9 @@
 import { extname } from "path";
-import { async } from "rxjs";
 const nodegit = require("nodegit");
 const path = require("path");
-const fileName = "newfile.txt";
+const fileName = "test.txt";
 const fileContent = "hello world";
-const directoryName = "https://github.com/BlockzeroLabs/dropzero-backend.git";
+const directoryName = "projects/dropzero_server";
 const { Parser } = require("json2csv");
 const json2csvParser = new Parser();
 const fs = require("fs");
@@ -77,52 +76,98 @@ export const convertJsonToCsv = (data, token_name, date, id) => {
 };
 
 export const uploadFileToGit = async () => {
-  const repo = await nodegit.Repository.open(
-    path.resolve(
-      "https://github.com/BlockzeroLabs/dropzero-backend.git",
-      "../.git"
-    )
-  );
+  try {
+    // let get = await nodegit.Clone(
+    //   "https://github.com/nodegit/nodegit",
+    //   "./tmp"
+    // );
+    // console.log("get", get);
+    // nodegit
+    //   .Clone("https://github.com/nodegit/nodegit", "./tmp")
+    //   // Look up this known commit.
+    //   .then(function(repo) {
+    //     console.log("repo", repo);
+    //     // Use a known commit sha from this repository.
+    //     return repo.getCommit("59b20b8d5c6ff8d09518454d4dd8b7b30f095ab5");
+    //   })
+    //   // Look up a specific file within that commit.
+    //   .then(function(commit) {
+    //     console.log("repo", commit);
+    //     return commit.getEntry("README.md");
+    //   })
+    //   // Get the blob contents from the file.
+    //   .then(function(entry) {
+    //     console.log("repo", entry);
+    //     // Patch the blob to contain a reference to the entry.
+    //     return entry.getBlob().then(function(blob) {
+    //       blob.entry = entry;
+    //       return blob;
+    //     });
+    //   });
+    // const repo = await nodegit.Repository.open(
+    //   path.resolve(directoryName, "../../.git")
+    // );
+    let repo: any = "";
+    nodegit.Repository.open(path.resolve(__dirname, "../../tmp"))
+      .catch(function() {
+        console.log("arguments =>", arguments);
+      })
+      .then(function(repoResult) {
+        repo = repoResult;
+        console.log("check result", repo);
+        console.log("repo =>", repo.getStatus);
+        return repo.getStatus();
+      })
+      .catch(function() {
+        console.log("arguments 2 =>", arguments);
+      });
+    // console.log("check repo", repo);
 
-  await fs.promises.mkdir(path.join(repo.workdir(), directoryName), {
-    recursive: true,
-  });
+    // await fs.promises.mkdir(path.join(repo.workdir(), directoryName), {
+    //   recursive: true,
+    // });
 
-  await fs.promises.writeFile(path.join(repo.workdir(), fileName), fileContent);
-  await fs.promises.writeFile(
-    path.join(repo.workdir(), directoryName, fileName),
-    fileContent
-  );
+    // await fs.promises.writeFile(
+    //   path.join(repo.workdir(), fileName),
+    //   fileContent
+    // );
+    // await fs.promises.writeFile(
+    //   path.join(repo.workdir(), directoryName, fileName),
+    //   fileContent
+    // );
 
-  const index = await repo.refreshIndex();
+    // const index = await repo.refreshIndex();
 
-  // this file is in the root of the directory and doesn't need a full path
-  await index.addByPath(fileName);
-  // this file is in a subdirectory and can use a relative path
-  await index.addByPath(path.posix.join(directoryName, fileName));
-  // this will write both files to the index
-  await index.write();
+    // // this file is in the root of the directory and doesn't need a full path
+    // await index.addByPath(fileName);
+    // // this file is in a subdirectory and can use a relative path
+    // await index.addByPath(path.posix.join(directoryName, fileName));
+    // // this will write both files to the index
+    // await index.write();
 
-  const oid = await index.writeTree();
+    // const oid = await index.writeTree();
 
-  const parent = await repo.getHeadCommit();
-  const author = nodegit.Signature.now(
-    "SarfarazAhmedKhan",
-    "sarfarazahmedkhankhan@gmail.com"
-  );
-  const committer = nodegit.Signature.now(
-    "SarfarazAhmedKhan",
-    "sarfarazahmedkhankhan@gmail.com"
-  );
+    // const parent = await repo.getHeadCommit();
+    // const author = nodegit.Signature.now(
+    //   "SarfarazAhmedKhan",
+    //   "sarfarazahmedkhankhan@gmail.com"
+    // );
+    // const committer = nodegit.Signature.now(
+    //   "SarfarazAhmedKhan",
+    //   "sarfarazahmedkhankhan@gmail.com"
+    // );
 
-  const commitId = await repo.createCommit(
-    "HEAD",
-    author,
-    committer,
-    "message",
-    oid,
-    [parent]
-  );
+    // const commitId = await repo.createCommit(
+    //   "HEAD",
+    //   author,
+    //   committer,
+    //   "message",
+    //   oid,
+    //   [parent]
+    // );
 
-  console.log("New Commit: ", commitId);
+    // console.log("New Commit: ", commitId);
+  } catch (e) {
+    console.log("check error now", e);
+  }
 };
