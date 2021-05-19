@@ -5,6 +5,7 @@ require("dotenv/config");
 async function bootstrap() {
   const express = require("express");
   const apps = express();
+  console.log(__dirname);
   const app = await NestFactory.create(AppModule, { cors: true });
   let bodyParser = require("body-parser");
   apps.use(express.static("public"));
