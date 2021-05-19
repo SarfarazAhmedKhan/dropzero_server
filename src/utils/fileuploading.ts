@@ -83,14 +83,14 @@ export const convertJsonToCsv = (data, token_name, date, id) => {
   }
 };
 
-export const uploadFileToGit = async (csv, dropName) => {
+export const movedFilePath = (data, dropName, filePath) => {
   try {
     var x = new Date().toString().split(" ");
     let date = `${x[2] + " " + x[1] + " " + x[3]}`;
     let filename =
-      `${dropName + "(" + date + ")"}` + "_" + editCsvFileName(csv);
+      `${dropName + "(" + date + ")"}` + "_" + editCsvFileName(data);
     console.log("check file", filename);
-    fs.writeFile(`${filename}.csv`, csv, "utf8", function(err) {
+    fs.writeFile(`${filename}.csv`, data, "utf8", function(err) {
       if (err) {
         console.log(
           "Some error occured - file either not saved or corrupted file saved.",
@@ -98,12 +98,21 @@ export const uploadFileToGit = async (csv, dropName) => {
         );
       } else {
         const currentPath = path.join("./", `${filename}.csv`);
-        const newPath = path.join("./", "csvrecord", `${filename}.csv`);
+        const newPath = path.join("./", filePath, `${filename}.csv`);
         fs.renameSync(currentPath, newPath);
         console.log("Successfully moved the file!");
         console.log("It's saved!");
       }
     });
+    return;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const uploadFileToGit = async (csv, dropName) => {
+  try {
+    await movedFilePath(csv, dropName, "csvrecord");
     git.addConfig("user.email", "sarfarazahmedkhankhan@gmail.com");
     git.addConfig("user.name", "sarfarazahmedkhan");
     git.addRemote("origin", gitHubUrl);
