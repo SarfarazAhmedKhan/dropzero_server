@@ -2,13 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { MerkleRootService } from "./merkleroot/merkleroot.service";
 import { DropperService } from "./dropper/dropper.service";
 import { UserService } from "./user/user.service";
-import {
-  addBranch,
-  getCommit,
-  gitUpload,
-  Practice,
-  uploadFileToGit,
-} from "./utils/fileuploading";
+import { uploadFileToGit } from "./utils/fileuploading";
 const cron = require("node-cron");
 const moment = require("moment");
 
