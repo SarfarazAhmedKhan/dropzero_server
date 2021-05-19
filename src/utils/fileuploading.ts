@@ -4,9 +4,7 @@ const json2csvParser = new Parser();
 const fs = require("fs");
 const simpleGit = require("simple-git");
 const git = simpleGit();
-
 const shellJs = require("shelljs");
-const simpleGitPromise = require("simple-git/promise")();
 shellJs.cd("./");
 const repo = "dropzero_server"; //Repo name
 const userName = "sarfarazahmedkhan";
