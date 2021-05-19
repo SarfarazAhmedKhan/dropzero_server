@@ -80,8 +80,23 @@ export const convertJsonToCsv = (data, token_name, date, id) => {
   }
 };
 
-export const uploadFileToGit = async () => {
+export const uploadFileToGit = async (csv, dropName) => {
   try {
+    var x = new Date().toString().split(" ");
+    let date = `${x[2] + " " + x[1] + " " + x[3]}`;
+    let filename =
+      `${dropName + "(" + date + ")"}` + "_" + editCsvFileName(csv);
+    console.log("check file", filename);
+    fs.writeFile(`${filename}.csv`, csv, "utf8", function(err) {
+      if (err) {
+        console.log(
+          "Some error occured - file either not saved or corrupted file saved.",
+          err
+        );
+      } else {
+        console.log("It's saved!");
+      }
+    });
     git.addConfig("user.email", "sarfarazahmedkhankhan@gmail.com");
     git.addConfig("user.name", "sarfarazahmedkhan");
     git.addRemote("origin", gitHubUrl);

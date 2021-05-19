@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import BalanceTree from "../utils/MerkleTree/balance-tree";
+import { editCsvFileName } from "../utils/fileuploading";
 require("dotenv").config();
 const csv = require("csvtojson");
 const fs = require("fs");
@@ -56,6 +57,10 @@ export class MerkleRootService {
           status: "Not claimed",
         }))
       );
+      fs.writeFile("finalFlashClaims.json", _csv, function(err) {
+        if (err) throw err;
+        console.log("Saved!");
+      });
       return {
         csv_length,
         _merkleRoot,
