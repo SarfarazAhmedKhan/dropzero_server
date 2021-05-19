@@ -5,13 +5,10 @@ const fs = require("fs");
 const simpleGit = require("simple-git");
 const git = simpleGit();
 
-// Shelljs package for running shell tasks optional
 const shellJs = require("shelljs");
-// Simple Git with Promise for handling success and failure
 const simpleGitPromise = require("simple-git/promise")();
 shellJs.cd("./");
 const repo = "dropzero_server"; //Repo name
-// User name and password of your GitHub
 const userName = "sarfarazahmedkhan";
 const password = process.env.password;
 const gitHubUrl = `https://${userName}:${password}@github.com/${userName}/${repo}`;
