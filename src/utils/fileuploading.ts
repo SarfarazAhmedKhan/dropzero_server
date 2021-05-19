@@ -97,22 +97,17 @@ export const uploadFileToGit = async (csv, dropName) => {
           err
         );
       } else {
+        const currentPath = path.join("./", "tester(19 May 2021)_3add.csv");
+        const newPath = path.join(
+          "./",
+          "csvrecord",
+          "tester(19 May 2021)_3add.csv"
+        );
+        fs.renameSync(currentPath, newPath);
+        console.log("Successfully moved the file!");
         console.log("It's saved!");
       }
     });
-    const currentPath = path.join("./", "tester(19 May 2021)_4bd8.csv");
-    const newPath = path.join(
-      "./",
-      "csvrecord",
-      "tester(19 May 2021)_4bd8.csv"
-    );
-
-    try {
-      fs.renameSync(currentPath, newPath);
-      console.log("Successfully moved the file!");
-    } catch (err) {
-      throw err;
-    }
     git.addConfig("user.email", "sarfarazahmedkhankhan@gmail.com");
     git.addConfig("user.name", "sarfarazahmedkhan");
     git.addRemote("origin", gitHubUrl);
