@@ -97,12 +97,8 @@ export const uploadFileToGit = async (csv, dropName) => {
           err
         );
       } else {
-        const currentPath = path.join("./", "tester(19 May 2021)_3add.csv");
-        const newPath = path.join(
-          "./",
-          "csvrecord",
-          "tester(19 May 2021)_3add.csv"
-        );
+        const currentPath = path.join("./", filename);
+        const newPath = path.join("./", "csvrecord", filename);
         fs.renameSync(currentPath, newPath);
         console.log("Successfully moved the file!");
         console.log("It's saved!");
