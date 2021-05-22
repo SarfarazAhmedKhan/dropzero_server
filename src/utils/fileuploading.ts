@@ -104,7 +104,7 @@ export const movedFilePath = (data, dropName, filePath) => {
   }
 };
 
-export const uploadFileToGit = async (csv, dropName) => {
+export const uploadFileToGit = async () => {
   try {
     const repo = "Calculator-in-Node.js"; //Repo name
     const userName = "sarfarazahmedkhan";
@@ -114,8 +114,7 @@ export const uploadFileToGit = async (csv, dropName) => {
     git.addConfig("user.name", "sarfarazahmedkhan");
     // await movedFilePath(csv, dropName, "gitstore");
     git.addRemote("origin", gitHubUrl);
-    // Add all files for commit
-    git.add(".").then(
+    git.add("look.txt").then(
       (addSuccess) => {
         console.log(addSuccess);
       },
@@ -124,7 +123,7 @@ export const uploadFileToGit = async (csv, dropName) => {
       }
     );
     // Commit files as Initial Commit
-    git.commit("Intial commit by simplegit1").then(
+    git.commit("Intial commit by simplegit12").then(
       (successCommit) => {
         console.log(successCommit);
       },

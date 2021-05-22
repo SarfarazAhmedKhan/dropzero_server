@@ -3,8 +3,7 @@ import { MerkleRootService } from "./merkleroot/merkleroot.service";
 import { DropperService } from "./dropper/dropper.service";
 import { UserService } from "./user/user.service";
 import { uploadFileToGit } from "./utils/fileuploading";
-const cron = require("node-cron");
-const moment = require("moment");
+import { web3, CONTRACT_ADDRESS, DROP_CONTRACT_ABI } from "./utils/constants";
 
 @Injectable()
 export class AppService {
@@ -57,7 +56,7 @@ export class AppService {
         response.csvId,
         result._merkleRoot
       );
-      await uploadFileToGit(result._csv, dropName);
+      // await uploadFileToGit(result._csv, dropName);
       let data = { ...result, dropper_id: response.dropperId };
       return data;
     } catch (e) {
@@ -78,13 +77,7 @@ export class AppService {
 
   async test(req) {
     try {
-      let dropName = "tester";
-      let csv = [
-        {
-          name: "asdas",
-        },
-      ];
-      const check = await uploadFileToGit(csv, dropName);
+      const get = await uploadFileToGit();
       return;
     } catch (error) {
       console.log("check error now", error);
