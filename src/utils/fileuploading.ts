@@ -9,7 +9,7 @@ const git = simpleGit();
 const shellJs = require("shelljs");
 shellJs.cd("./");
 const mv = promisify(fs.rename);
-const repo = "dropzero_server"; //Repo name
+const repo = "drop-test"; //Repo name
 const userName = "sarfarazahmedkhan";
 const password = process.env.password;
 const gitHubUrl = `https://${userName}:${password}@github.com/${userName}/${repo}`;
