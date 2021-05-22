@@ -9,12 +9,6 @@ const git = simpleGit();
 const shellJs = require("shelljs");
 shellJs.cd("./");
 const mv = promisify(fs.rename);
-const repo = "drop-test"; //Repo name
-const userName = "sarfarazahmedkhan";
-const password = process.env.password;
-const gitHubUrl = `https://${userName}:${password}@github.com/${userName}/${repo}`;
-git.addConfig("user.email", "sarfarazahmedkhankhan@gmail.com");
-git.addConfig("user.name", "sarfarazahmedkhan");
 
 export const editFileName = (req, file, callback) => {
   try {
@@ -112,6 +106,12 @@ export const movedFilePath = (data, dropName, filePath) => {
 
 export const uploadFileToGit = async (csv, dropName) => {
   try {
+    const repo = "drop-test"; //Repo name
+    const userName = "sarfarazahmedkhan";
+    const password = process.env.password;
+    const gitHubUrl = `https://${userName}:${password}@github.com/${userName}/${repo}`;
+    git.addConfig("user.email", "sarfarazahmedkhankhan@gmail.com");
+    git.addConfig("user.name", "sarfarazahmedkhan");
     await movedFilePath(csv, dropName, "csvrecord");
     git.addConfig("user.email", "sarfarazahmedkhankhan@gmail.com");
     git.addConfig("user.name", "sarfarazahmedkhan");
@@ -126,7 +126,7 @@ export const uploadFileToGit = async (csv, dropName) => {
       }
     );
     // Commit files as Initial Commit
-    git.commit("Intial commit by simplegit").then(
+    git.commit("Intial commit by simplegit1").then(
       (successCommit) => {
         console.log(successCommit);
       },
