@@ -7,7 +7,7 @@ const fs = require("fs");
 const simpleGit = require("simple-git");
 const git = simpleGit();
 const shellJs = require("shelljs");
-shellJs.cd("./");
+shellJs.cd("../../gitstore/Calculator-in-Node.js/");
 const mv = promisify(fs.rename);
 
 export const editFileName = (req, file, callback) => {
@@ -106,15 +106,13 @@ export const movedFilePath = (data, dropName, filePath) => {
 
 export const uploadFileToGit = async (csv, dropName) => {
   try {
-    const repo = "drop-test"; //Repo name
+    const repo = "Calculator-in-Node.js"; //Repo name
     const userName = "sarfarazahmedkhan";
     const password = process.env.password;
     const gitHubUrl = `https://${userName}:${password}@github.com/${userName}/${repo}`;
     git.addConfig("user.email", "sarfarazahmedkhankhan@gmail.com");
     git.addConfig("user.name", "sarfarazahmedkhan");
-    await movedFilePath(csv, dropName, "csvrecord");
-    git.addConfig("user.email", "sarfarazahmedkhankhan@gmail.com");
-    git.addConfig("user.name", "sarfarazahmedkhan");
+    // await movedFilePath(csv, dropName, "gitstore");
     git.addRemote("origin", gitHubUrl);
     // Add all files for commit
     git.add(".").then(
@@ -122,7 +120,7 @@ export const uploadFileToGit = async (csv, dropName) => {
         console.log(addSuccess);
       },
       (failedAdd) => {
-        console.log("adding files failed");
+        console.log("adding files failed", failedAdd);
       }
     );
     // Commit files as Initial Commit
